@@ -1,0 +1,111 @@
+# SPDX-FileCopyrightText: 2026 Jean-Pierre De Jesus DIAZ <me@jeandudey.tech>
+#
+# SPDX-License-Identifier: MIT
+
+name: bitcoin
+title: Bitcoin
+summary: Bitcoin Core daemon
+description: |
+  This image provides the Bitcoin Core daemon, a decentralized cryptocurrency.
+version: '30.2'
+base: bare
+build-base: ubuntu@24.04
+source-code: https://github.com/jeandudey/rock-bitcoin
+license: MIT
+contact: me@jeandudey.tech
+issues: https://github.com/jeandudey/rock-bitcoin/issues
+
+platforms:
+  amd64:
+    build-on:
+      - amd64
+    build-for:
+      - amd64
+
+  armhf:
+    build-on:
+      - amd64
+      - arm64
+      - armhf
+    build-for:
+      - armhf
+
+  arm64:
+    build-on:
+      - amd64
+      - arm64
+    build-for:
+      - arm64
+
+  riscv64:
+    build-on:
+      - amd64
+      - arm64
+      - riscv64
+    build-for:
+      - riscv64
+
+services:
+  bitcoind:
+    command: bitcoind -datadir=/var/lib/bitcoin
+    override: replace
+    startup: enabled
+    description: Bitcoin Core daemon
+    working-dir: /var/lib/bitcoin
+
+parts:
+  bitcoin:
+    plugin: cmake
+    source: https://github.com/bitcoin/bitcoin
+    source-type: git
+    source-tag: v30.2
+    source-depth: 1
+    build-packages:
+      - libboost-dev
+      - libevent-dev
+      - libsqlite3-dev
+      - libzmq3-dev
+      - pkg-config
+    cmake-parameters:
+      - -DBUILD_BITCOIN_BIN=OFF
+      - -DBUILD_CLI=ON
+      - -DBUILD_DAEMON=ON
+      - -DBUILD_GUI=OFF
+      - -DBUILD_TESTS=OFF
+      - -DBUILD_TX=OFF
+      - -DBUILD_UTIL=OFF
+      - -DBUILD_WALLET_TOOL=OFF
+      - -DCMAKE_CXX_FLAGS_RELWITHDEBINFO="-O2 -g0"
+      - -DCMAKE_INSTALL_PREFIX=/usr
+      - -DENABLE_EXTERNAL_SIGNER=OFF
+      - -DENABLE_IPC=OFF
+      - -DENABLE_WALLET=OFF
+      - -DINSTALL_MAN=OFF
+      - -DWITH_ZMQ=ON
+    prime:
+      - usr/bin/bitcoind
+      - usr/bin/bitcoin-cli
+
+  packages:
+    plugin: nil
+    stage-packages:
+      - base-files_chisel
+      - base-files_release-info
+      - base-files_var
+      - libc6_libs
+      - libevent-core-2.1-7t64_libs
+      - libevent-extra-2.1-7t64_libs
+      - libevent-pthreads-2.1-7t64_libs
+      - libgcc-s1_libs
+      - libsqlite3-0_libs
+      - libstdc++6_libs
+      - libzmq5_libs
+
+  deb-security-manifest:
+    after:
+      - packages
+    plugin: make
+    source: https://github.com/canonical/rocks-security-manifest
+    source-type: git
+    source-branch: main
+    override-prime: gen_manifest
