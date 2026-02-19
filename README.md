@@ -4,7 +4,7 @@
 # SPDX-License-Identifier: MIT
 -->
 
-# Fulcrum rock
+# Bitcoin rock
 
 A distroless rock image for [Bitcoin Core](https://github.com/bitcoin/bitcoin).
 
