@@ -29,5 +29,5 @@ The wallet has been also disabled.
 
 The goal of this image is to reduce size and attack surface by having less
 components in the final image, in comparison, the Docker image from
-the `docker.io/bitcoin/bitcoin:latest` is about 206 MB and this
+`docker.io/bitcoin/bitcoin:latest` is about 206 MB and this
 image is around 44.7 MB.
