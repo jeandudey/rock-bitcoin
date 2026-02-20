@@ -92,6 +92,8 @@ parts:
       - base-files_chisel
       - base-files_release-info
       - base-files_var
+      - bash_bins
+      - jq_bins
       - libc6_libs
       - libevent-core-2.1-7t64_libs
       - libevent-extra-2.1-7t64_libs
@@ -100,6 +102,13 @@ parts:
       - libsqlite3-0_libs
       - libstdc++6_libs
       - libzmq5_libs
+
+  bin:
+    plugin: dump
+    source: ./bin
+    organize:
+      bitcoind-is-alive: usr/bin/bitcoind-is-alive
+      bitcoind-is-synchronized: usr/bin/bitcoind-is-synchronized
 
   deb-security-manifest:
     after:

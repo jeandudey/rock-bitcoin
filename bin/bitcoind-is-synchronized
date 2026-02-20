@@ -1,0 +1,15 @@
+#!/usr/bin/bash
+# SPDX-FileCopyrightText: 2026 Jean-Pierre De Jesus DIAZ <me@jeandudey.tech>
+#
+# SPDX-License-Identifier: MIT
+
+set -euo pipefail
+
+if [ "$#" -ne 1 ]; then
+  echo "Usage: $0 <address>"
+  exit 1
+fi
+
+blockchain_info=$(bitcoin-cli -rpcwait -datadir=/var/lib/bitcoin -rpcconnect="$1" getblockchaininfo 2>/dev/null) || exit 1
+echo "$blockchain_info" | jq -e '.initialblockdownload == false' > /dev/null || exit 2
+echo "$blockchain_info" | jq -e '.verificationprogress >= 0.9999' > /dev/null || exit 3

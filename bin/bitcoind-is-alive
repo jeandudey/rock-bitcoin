@@ -1,0 +1,18 @@
+#!/usr/bin/bash
+# SPDX-FileCopyrightText: 2026 Jean-Pierre De Jesus DIAZ <me@jeandudey.tech>
+#
+# SPDX-License-Identifier: MIT
+
+set -euo pipefail
+
+if [ "$#" -ne 1 ]
+then
+  echo "Usage: $0 <address>"
+  exit 2
+fi
+
+bitcoin-cli \
+  -rpcwait \
+  -datadir=/var/lib/bitcoin \
+  -rpcconnect="$1" \
+  ping
