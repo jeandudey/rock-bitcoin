@@ -7,7 +7,7 @@ title: Bitcoin
 summary: Bitcoin Core daemon
 description: |
   This image provides the Bitcoin Core daemon, a decentralized cryptocurrency.
-version: '30.2'
+version: '30.2-1'
 base: bare
 build-base: ubuntu@24.04
 source-code: https://github.com/jeandudey/rock-bitcoin

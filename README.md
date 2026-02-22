@@ -11,8 +11,8 @@ A distroless rock image for [Bitcoin Core](https://github.com/bitcoin/bitcoin).
 ## Usage
 
 ```bash
-docker pull ghcr.io/jeandudey/bitcoin:30.2
-docker run -it ghcr.io/jeandudey/bitcoin:30.2
+docker pull ghcr.io/jeandudey/bitcoin:30.2-1
+docker run -it ghcr.io/jeandudey/bitcoin:30.2-1
 ```
 
 The image expects the data directory to be at:
